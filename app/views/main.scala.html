@@ -1,0 +1,20 @@
+@()(implicit request: Request[_])<!DOCTYPE html>
+<html>
+    <head>
+        <title>Title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="@controllers.routes.Assets.versioned("stylesheets/main.css")">
+    </head>
+    <body>
+
+        <div id="app-container">
+        </div>
+
+        @*<script data-main="@controllers.routes.Assets.versioned("js/app.js")" src="@controllers.routes.Assets.versioned("js/libs/require-2.1.17.js")"></script>*@
+        <script src="@controllers.routes.Assets.versioned("js/bundle.js")"></script>
+
+    </body>
+</html>
+
+
+
