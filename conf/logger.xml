@@ -15,10 +15,6 @@
         </encoder>
     </appender>
 
-    <appender name="loggly" class="ch.qos.logback.ext.loggly.LogglyAppender">
-        <endpointUrl>http://logs-01.loggly.com/inputs/59fc4e95-14a3-46fb-881e-cbd51a505e77/tag/debug</endpointUrl>
-        <pattern>%d{ISO8601} %p %t %c{0}.%M - %m%n</pattern>
-    </appender>
 
     <logger name="play" level="INFO" />
     <logger name="application" level="INFO" />
@@ -26,7 +22,6 @@
     <!-- access log -->
     <logger name="access" level="INFO" additivity="false">
         <appender-ref ref="STDOUT" />
-        <!-- <appender-ref ref="loggly" /> -->
     </logger>
 
     <!-- Off these ones as they are annoying, and anyway we manage configuration ourself -->
@@ -42,7 +37,6 @@
     <root level="ERROR">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
-        <!-- <appender-ref ref="loggly" /> -->
     </root>
 
 

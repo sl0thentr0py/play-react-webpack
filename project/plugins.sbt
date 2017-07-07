@@ -2,7 +2,7 @@
 // Comment to get more information during initialization
 logLevel := Level.Info
 
-resolvers += Resolver.typesafeRepo("releases")
+//resolvers += Resolver.typesafeRepo("releases")
 
 resolvers += Resolver.sonatypeRepo("releases")
 
@@ -19,5 +19,5 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-gzip" % "1.0.0")
 
 //addSbtPlugin("io.teamscala.sbt" % "sbt-babel" % "1.0.5")
 
-//addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.15")
+addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.15")
 

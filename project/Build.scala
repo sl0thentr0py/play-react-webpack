@@ -8,6 +8,8 @@ import com.typesafe.sbt.web.SbtWeb
 import play.sbt.Play.autoImport._
 import sbt.Keys._
 import sbt._
+import play.PlayImport.PlayKeys.playRunHooks
+import Webpack._
 
 object ApplicationBuild extends Build {
 
@@ -43,8 +45,7 @@ object ApplicationBuild extends Build {
         "com.lihaoyi" %% "upickle" % "0.2.8",
         "org.scalatestplus" % "play_2.11" % "1.4.0"
       ),
-
-      //RjsKeys.mainModule := "app",
+      playRunHooks <+= baseDirectory.map(base => Webpack(base)),
       pipelineStages := Seq(digest, gzip)
 
   ).dependsOn(model)
