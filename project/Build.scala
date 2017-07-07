@@ -27,7 +27,7 @@ object ApplicationBuild extends Build {
 
   /** data model */
   lazy val model = Project(
-    "pioneers-model", file("model"), settings = commonSettings).settings(
+    "model", file("model"), settings = commonSettings).settings(
       libraryDependencies ++= Seq(
         cache
       )
@@ -35,7 +35,7 @@ object ApplicationBuild extends Build {
 
 
   /** play website */
-  lazy val main = Project("pioneers-main", file("."), settings = commonSettings).
+  lazy val main = Project("main", file("."), settings = commonSettings).
     enablePlugins(play.sbt.PlayScala, SbtWeb).
     settings(
       JsEngineKeys.engineType := JsEngineKeys.EngineType.Node,
