@@ -5,14 +5,12 @@ import com.typesafe.sbt.digest.Import._
 import com.typesafe.sbt.gzip.Import._
 import com.typesafe.sbt.web.Import._
 import com.typesafe.sbt.web.SbtWeb
-import com.typesafe.sbt.web.pipeline.Pipeline
 import play.sbt.Play.autoImport._
 import sbt.Keys._
 import sbt._
-import play.PlayImport.PlayKeys.playRunHooks
-import com.typesafe.sbt.packager.Keys.dist
+import play.sbt.PlayImport.PlayKeys.playRunHooks
+import com.typesafe.sbt.packager.Keys._
 import Webpack._
-
 object ApplicationBuild extends Build {
 
   override def settings = super.settings ++ Seq(
@@ -48,14 +46,15 @@ object ApplicationBuild extends Build {
         "org.scalatestplus" % "play_2.11" % "1.4.0"
       ),
       playRunHooks <+= baseDirectory.map(base => Webpack(base)),
-      webpack := baseDirectory.map(base => Webpack.runDist(base)),
-      pipelineStages := Seq(digest, gzip),
+      excludeFilter in Assets := "*.js" || "*.jsx",
+      webpack := Webpack.runDist.value,
       dist <<= dist dependsOn webpack,
-      stage <<= stage dependsOn webpack
+      stage <<= stage dependsOn webpack,
+      pipelineStages := Seq(digest, gzip)
 
   ).dependsOn(model)
 
-  val webpack = taskKey[Unit]("Webpack")
+  val webpack = taskKey[Unit]("Run webpack dist")
 
 
 }

@@ -8,6 +8,8 @@ syntax: glob
 *.old
 .DS_Store
 
+.history
+
 # logs
 derby.log
 

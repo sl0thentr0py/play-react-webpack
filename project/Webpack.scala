@@ -1,7 +1,7 @@
 import java.net.InetSocketAddress
 import play.sbt.PlayRunHook
-import com.typesafe.sbt.web.pipeline.Pipeline
 import sbt._
+import sbt.Keys._
 
 object Webpack {
   def apply(base: File): PlayRunHook = {
@@ -29,7 +29,10 @@ object Webpack {
     WebpackHook
   }
 
-  def runDist(base: File) = {
-    Process("webpack", base).run()
+  def runDist = Def.task {
+      println("running webpack dist")
+      val statusCode = Process("webpack", baseDirectory.value).!
+      if(statusCode > 0) throw new Exception("Webpack failed with exit code : " + statusCode)
   }
+
 }

@@ -5,4 +5,4 @@ var ReactDOM = require('react-dom');
 
 
 
-ReactDOM.render(<p className="css-test">From reactasdasda change again!</p>, document.getElementById('app-container'));  
+ReactDOM.render(<p className="css-test">From react test asdasd !</p>, document.getElementById('app-container'));
