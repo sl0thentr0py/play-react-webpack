@@ -1,5 +1,6 @@
 import java.net.InetSocketAddress
 import play.sbt.PlayRunHook
+import com.typesafe.sbt.web.pipeline.Pipeline
 import sbt._
 
 object Webpack {
@@ -26,5 +27,9 @@ object Webpack {
     }
 
     WebpackHook
+  }
+
+  def runDist(base: File) = {
+    Process("webpack", base).run()
   }
 }
