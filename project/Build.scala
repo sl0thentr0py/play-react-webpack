@@ -28,10 +28,10 @@ object ApplicationBuild extends Build {
   /** data model */
   lazy val model = Project(
     "model", file("model"), settings = commonSettings).settings(
-      libraryDependencies ++= Seq(
-        cache
-      )
+    libraryDependencies ++= Seq(
+      cache
     )
+  )
 
 
   /** play website */
@@ -46,13 +46,15 @@ object ApplicationBuild extends Build {
         "org.scalatestplus" % "play_2.11" % "1.4.0"
       ),
       playRunHooks <+= baseDirectory.map(base => Webpack(base)),
-      excludeFilter in Assets := "*.js" || "*.jsx",
+      excludeFilter in Assets := "*.jsx" || "*.js",
+      managedResourceDirectories in Assets ++= (WebKeys.webTarget.value / "webpack" / "main").get,
+      managedResources in Assets <<= managedResources in Assets dependsOn webpack,
       webpack := Webpack.runDist.value,
       dist <<= dist dependsOn webpack,
       stage <<= stage dependsOn webpack,
       pipelineStages := Seq(digest, gzip)
 
-  ).dependsOn(model)
+    ).dependsOn(model)
 
   val webpack = taskKey[Unit]("Run webpack dist")
 

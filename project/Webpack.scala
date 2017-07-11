@@ -10,13 +10,13 @@ object Webpack {
 
       override def beforeStarted() = {
         process = Option(
-          Process("webpack", base).run()
+          Process("npm run webpack", base).run()
         )
       }
 
       override def afterStarted(addr: InetSocketAddress) = {
         process = Option(
-          Process("webpack --watch", base).run()
+          Process("npm run webpack -- --watch", base).run()
         )
       }
 
@@ -31,7 +31,7 @@ object Webpack {
 
   def runDist = Def.task {
       println("running webpack dist")
-      val statusCode = Process("webpack", baseDirectory.value).!
+      val statusCode = Process("npm run webpack", baseDirectory.value).!
       if(statusCode > 0) throw new Exception("Webpack failed with exit code : " + statusCode)
   }
 
