@@ -1,6 +1,8 @@
 'use strict';
 
 var webpack = require('webpack');
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+
 
 module.exports = {
     entry: './app/assets/js/index.jsx',
@@ -25,6 +27,7 @@ module.exports = {
         extensions: ['.js', '.jsx']
     },
     plugins: [
+        new HardSourceWebpackPlugin(),
         new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/)
     ]
 };

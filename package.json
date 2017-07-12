@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "hard-source-webpack-plugin": "^0.4.9",
     "react": "15.0.1",
     "react-dom": "15.0.1"
   },
