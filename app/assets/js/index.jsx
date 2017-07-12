@@ -5,4 +5,4 @@ var ReactDOM = require('react-dom');
 
 
 
-ReactDOM.render(<p className="css-test">From react as !</p>, document.getElementById('app-container'));
+ReactDOM.render(<p className="css-test">Frin react  !</p>, document.getElementById('app-container'));

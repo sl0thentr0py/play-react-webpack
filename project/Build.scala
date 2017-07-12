@@ -9,7 +9,6 @@ import com.typesafe.sbt.gzip.Import._
 import com.typesafe.sbt.web.Import._
 import com.typesafe.sbt.web.SbtWeb
 import play.sbt.Play.autoImport._
-import play.sbt.PlayRunHook
 import sbt._
 import sbt.Keys._
 
@@ -53,7 +52,7 @@ object ApplicationBuild extends Build {
     ) ++ addJsSourceFileTasks(webpack)
     ).dependsOn(model)
 
-  //val webpack = taskKey[Unit]("Run webpack dist")
+  // webpack below
   val webpack = taskKey[Seq[File]]("Webpack source file task")
 
   // from https://github.com/sbt/sbt-js-engine/blob/master/src/main/scala/com/typesafe/sbt/jse/SbtJsTask.scala
@@ -69,15 +68,14 @@ object ApplicationBuild extends Build {
 
   def addJsSourceFileTasks(sourceFileTask: TaskKey[Seq[File]]): Seq[Setting[_]] = {
     Seq(
-      sourceFileTask in Assets := webpackTask.value,
-      resourceManaged in sourceFileTask in Assets := WebKeys.webTarget.value / sourceFileTask.key.label / "main",
-      sourceFileTask := (sourceFileTask in Assets).value
+      sourceFileTask in Assets := webpackTask.dependsOn(WebKeys.nodeModules in Assets).value,
+      resourceManaged in sourceFileTask in Assets := WebKeys.webTarget.value / sourceFileTask.key.label / "main"
     ) ++ inConfig(Assets)(addUnscopedJsSourceFileTasks(sourceFileTask))
   }
 
   def webpackTask : Def.Initialize[Task[Seq[File]]] = Def.task {
     val targetDir = WebKeys.webTarget.value / "webpack" / "main"
-    println("running webpack dist")
+    println("running webpack")
     val statusCode = Process("npm run webpack", baseDirectory.value).!
     if(statusCode > 0) throw new Exception("Webpack failed with exit code : " + statusCode)
     targetDir.***.get.filter(_.isFile)
