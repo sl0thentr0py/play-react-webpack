@@ -3,6 +3,7 @@ import java.net.InetSocketAddress
 
 import com.typesafe.sbt.jse.JsEngineImport.JsEngineKeys
 
+import com.typesafe.sbt.uglify.Import._
 import com.typesafe.sbt.digest.Import._
 import com.typesafe.sbt.gzip.Import._
 import com.typesafe.sbt.web.Import._
@@ -47,7 +48,7 @@ object ApplicationBuild extends Build {
         "com.lihaoyi" %% "upickle" % "0.2.8",
         "org.scalatestplus" % "play_2.11" % "1.4.0"
       ),
-      pipelineStages := Seq(digest, gzip),
+      pipelineStages := Seq(uglify, digest, gzip),
       WebKeys.exportedMappings in Assets := Seq()
     ) ++ addJsSourceFileTasks(webpack)
     ).dependsOn(model)
