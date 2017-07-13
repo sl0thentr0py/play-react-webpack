@@ -17,5 +17,7 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.1.1")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-gzip" % "1.0.0")
 
+addSbtPlugin("com.slidingautonomy.sbt" % "sbt-filter" % "1.0.1")
+
 addSbtPlugin("com.jamesward" % "play-auto-refresh" % "0.0.15")
 

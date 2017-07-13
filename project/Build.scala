@@ -6,6 +6,7 @@ import com.typesafe.sbt.jse.JsEngineImport.JsEngineKeys
 import com.typesafe.sbt.uglify.Import._
 import com.typesafe.sbt.digest.Import._
 import com.typesafe.sbt.gzip.Import._
+import com.slidingautonomy.sbt.filter.Import._
 import com.typesafe.sbt.web.Import._
 import com.typesafe.sbt.web.SbtWeb
 import play.sbt.Play.autoImport._
@@ -47,7 +48,8 @@ object ApplicationBuild extends Build {
         "com.lihaoyi" %% "upickle" % "0.2.8",
         "org.scalatestplus" % "play_2.11" % "1.4.0"
       ),
-      pipelineStages := Seq(uglify, digest, gzip),
+      includeFilter in filter := "*.less" || "*.jsx",
+      pipelineStages := Seq(filter, uglify, digest, gzip),
       WebKeys.exportedMappings in Assets := Seq()
     ) ++ addJsSourceFileTasks(webpack)
     ).dependsOn(model)
