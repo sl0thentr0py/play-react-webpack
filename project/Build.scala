@@ -10,6 +10,7 @@ import com.slidingautonomy.sbt.filter.Import._
 import com.typesafe.sbt.web.Import._
 import com.typesafe.sbt.web.SbtWeb
 import play.sbt.Play.autoImport._
+import Webpack.autoImport._
 import sbt._
 import sbt.Keys._
 
@@ -39,7 +40,7 @@ object ApplicationBuild extends Build {
 
   /** play website */
   lazy val main = Project("main", file("."), settings = commonSettings).
-    enablePlugins(play.sbt.PlayScala, SbtWeb).
+    enablePlugins(play.sbt.PlayScala, SbtWeb, Webpack).
     settings(Seq(
       JsEngineKeys.engineType := JsEngineKeys.EngineType.Node,
       libraryDependencies ++= Seq(
@@ -49,7 +50,7 @@ object ApplicationBuild extends Build {
         "org.scalatestplus" % "play_2.11" % "1.4.0"
       ),
       includeFilter in filter := "*.less" || "*.jsx",
-      pipelineStages := Seq(filter, uglify, digest, gzip),
+      pipelineStages := Seq(webpack, filter, uglify, digest, gzip),
       PlayKeys.playRunHooks += WebpackDevServer(baseDirectory.value, streams.value.log),
       WebKeys.exportedMappings in Assets := Seq()
     )
