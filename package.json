@@ -13,9 +13,11 @@
     "babel-loader": "^7.1.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "webpack": "3.0.0"
+    "webpack": "3.0.0",
+    "webpack-dev-server": "^2.5.1"
   },
   "scripts": {
-    "webpack": "webpack"
+    "webpack": "webpack",
+    "start": "webpack-dev-server --config webpack.config.js --progress --inline --colors"
   }
 }

@@ -50,12 +50,13 @@ object ApplicationBuild extends Build {
       ),
       includeFilter in filter := "*.less" || "*.jsx",
       pipelineStages := Seq(filter, uglify, digest, gzip),
+      PlayKeys.playRunHooks += WebpackDevServer(baseDirectory.value, streams.value.log),
       WebKeys.exportedMappings in Assets := Seq()
-    ) ++ addJsSourceFileTasks(webpack)
-    ).dependsOn(model)
+    )
+  ).dependsOn(model)
 
   // webpack below
-  val webpack = taskKey[Seq[File]]("Webpack source file task")
+  //val webpack = taskKey[Seq[File]]("Webpack source file task")
 
   // from https://github.com/sbt/sbt-js-engine/blob/master/src/main/scala/com/typesafe/sbt/jse/SbtJsTask.scala
   def addUnscopedJsSourceFileTasks(sourceFileTask: TaskKey[Seq[File]]): Seq[Setting[_]] = {
