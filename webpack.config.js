@@ -35,6 +35,7 @@ var config = {
     ],
     devServer: {
         //hot: true,
+        port: 8000,
         inline: true,
         stats: { colors: true },
         proxy: {
