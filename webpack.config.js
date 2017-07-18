@@ -10,7 +10,7 @@ var config = {
     output: {
         filename: 'js/bundle.js',
         path: path.resolve('target', 'web', 'webpack'),
-        publicPath: '/assets/',
+        publicPath: '/assets/'
     },
     module: {
         rules: [
@@ -34,6 +34,7 @@ var config = {
         ]
     },
     resolve: {
+        modules: ["node_modules", "./app/assets/"],
         extensions: ['.js', '.jsx', '.less', '.css']
     },
     plugins: [
@@ -65,4 +66,4 @@ if (process.env.NODE_ENV === 'production') {
   config.devtool = 'source-map';
 }
 
-module.exports = config
+module.exports = config;
