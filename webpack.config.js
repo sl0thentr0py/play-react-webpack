@@ -39,7 +39,8 @@ var config = {
         stats: { colors: true },
         proxy: {
           '*': 'http://localhost:9000'
-        }
+        },
+        publicPath: '/versioned/js'
     }
 };
 
