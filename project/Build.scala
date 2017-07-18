@@ -3,7 +3,6 @@ import java.net.InetSocketAddress
 
 import com.typesafe.sbt.jse.JsEngineImport.JsEngineKeys
 
-import com.typesafe.sbt.uglify.Import._
 import com.typesafe.sbt.digest.Import._
 import com.typesafe.sbt.gzip.Import._
 import com.slidingautonomy.sbt.filter.Import._
@@ -50,7 +49,7 @@ object ApplicationBuild extends Build {
         "org.scalatestplus" % "play_2.11" % "1.4.0"
       ),
       includeFilter in filter := "*.less" || "*.jsx",
-      pipelineStages := Seq(webpack, filter, uglify, digest, gzip),
+      pipelineStages := Seq(webpack, filter, digest, gzip),
       PlayKeys.playRunHooks += WebpackDevServer(baseDirectory.value, streams.value.log),
       WebKeys.exportedMappings in Assets := Seq()
     )

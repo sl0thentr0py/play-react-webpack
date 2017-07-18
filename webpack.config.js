@@ -51,10 +51,10 @@ if (process.env.NODE_ENV === 'production') {
     'process.env': {
       'NODE_ENV': JSON.stringify('production')
     }
-  }))
-  //config.plugins.push(new webpack.optimize.UglifyJsPlugin())
+  }));
+  config.plugins.push(new webpack.optimize.UglifyJsPlugin());
 } else {
-  config.devtool = 'source-map'
+  config.devtool = 'source-map';
 }
 
 module.exports = config
