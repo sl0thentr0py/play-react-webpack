@@ -56,34 +56,5 @@ object ApplicationBuild extends Build {
     )
   ).dependsOn(model)
 
-  // webpack below
-  //val webpack = taskKey[Seq[File]]("Webpack source file task")
-
-  // from https://github.com/sbt/sbt-js-engine/blob/master/src/main/scala/com/typesafe/sbt/jse/SbtJsTask.scala
-  def addUnscopedJsSourceFileTasks(sourceFileTask: TaskKey[Seq[File]]): Seq[Setting[_]] = {
-    Seq(
-      resourceGenerators <+= sourceFileTask,
-      managedResourceDirectories += (resourceManaged in sourceFileTask).value
-    ) ++ inTask(sourceFileTask)(Seq(
-      sourceDirectories := unmanagedSourceDirectories.value ++ managedSourceDirectories.value,
-      sources := unmanagedSources.value ++ managedSources.value
-    ))
-  }
-
-  def addJsSourceFileTasks(sourceFileTask: TaskKey[Seq[File]]): Seq[Setting[_]] = {
-    Seq(
-      sourceFileTask in Assets := webpackTask.dependsOn(WebKeys.nodeModules in Assets).value,
-      resourceManaged in sourceFileTask in Assets := WebKeys.webTarget.value / sourceFileTask.key.label / "main"
-    ) ++ inConfig(Assets)(addUnscopedJsSourceFileTasks(sourceFileTask))
-  }
-
-  def webpackTask : Def.Initialize[Task[Seq[File]]] = Def.task {
-    val targetDir = WebKeys.webTarget.value / "webpack" / "main"
-    println("running webpack")
-    val statusCode = Process("npm run webpack", baseDirectory.value).!
-    if(statusCode > 0) throw new Exception("Webpack failed with exit code : " + statusCode)
-    targetDir.***.get.filter(_.isFile)
-  }
-
 }
 
