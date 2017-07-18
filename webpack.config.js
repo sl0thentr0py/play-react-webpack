@@ -3,14 +3,14 @@
 var webpack = require('webpack');
 var path = require('path');
 var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
-
+var	ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var config = {
     entry: './app/assets/js/index.jsx',
     output: {
-        filename: 'bundle.js',
-        path: path.resolve('target', 'web', 'webpack', 'js'),
-        publicPath: '/assets/js/',
+        filename: 'js/bundle.js',
+        path: path.resolve('target', 'web', 'webpack'),
+        publicPath: '/assets/',
     },
     module: {
         rules: [
@@ -23,13 +23,21 @@ var config = {
                         presets: ['es2015', 'react'] // ?? env ??
                     }
                 }
+            },
+            {
+                test: /\.(less|css)$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'less-loader']
+                })
             }
         ]
     },
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx', '.less', '.css']
     },
     plugins: [
+        new ExtractTextPlugin('stylesheets/main.css'),
         new HardSourceWebpackPlugin(),
         new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/)
     ],
@@ -41,7 +49,7 @@ var config = {
         proxy: {
           '*': 'http://localhost:9000'
         },
-        publicPath: '/versioned/js'
+        publicPath: '/versioned/'
     }
 };
 
